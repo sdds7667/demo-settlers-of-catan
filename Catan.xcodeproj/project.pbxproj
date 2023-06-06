@@ -51,6 +51,10 @@
 		D6C1AF342A2FBDC100EC0D98 /* CatanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6C1AF382A2FBDC100EC0D98 /* CatanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatanUITests.swift; sourceTree = "<group>"; };
 		D6C1AF3A2A2FBDC100EC0D98 /* CatanUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatanUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D6C1AF472A2FDEB400EC0D98 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		D6C1AF482A2FDF7D00EC0D98 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D6C1AF4A2A2FE0CC00EC0D98 /* Screenshot 2023-06-06 at 23.46.24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Screenshot 2023-06-06 at 23.46.24.png"; path = "../../../../Desktop/Screenshot 2023-06-06 at 23.46.24.png"; sourceTree = "<group>"; };
+		D6C1AF4B2A2FE0DC00EC0D98 /* game-view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game-view.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,9 @@
 		D6C1AF0A2A2FBDC000EC0D98 = {
 			isa = PBXGroup;
 			children = (
+				D6C1AF4B2A2FE0DC00EC0D98 /* game-view.png */,
+				D6C1AF482A2FDF7D00EC0D98 /* README.md */,
+				D6C1AF472A2FDEB400EC0D98 /* CHANGELOG.md */,
 				D6C1AF152A2FBDC000EC0D98 /* Catan */,
 				D6C1AF2D2A2FBDC100EC0D98 /* CatanTests */,
 				D6C1AF372A2FBDC100EC0D98 /* CatanUITests */,
@@ -124,6 +131,7 @@
 		D6C1AF372A2FBDC100EC0D98 /* CatanUITests */ = {
 			isa = PBXGroup;
 			children = (
+				D6C1AF4A2A2FE0CC00EC0D98 /* Screenshot 2023-06-06 at 23.46.24.png */,
 				D6C1AF382A2FBDC100EC0D98 /* CatanUITests.swift */,
 				D6C1AF3A2A2FBDC100EC0D98 /* CatanUITestsLaunchTests.swift */,
 			);
