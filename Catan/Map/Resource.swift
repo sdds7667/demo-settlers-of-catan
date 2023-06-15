@@ -14,4 +14,5 @@ enum Resource: String {
     case sheep = "sheep"
     case wood = "wood"
     case desert = "cactus"
+    case water = "water-waves"
 }

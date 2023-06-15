@@ -10,11 +10,16 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    var map: Map = Map()
+    var map: Map? = nil
+    var controller: GameController? = nil
+    var lastCorner: HexCorner? = nil
     
     override func didMove(to view: SKView) {
         print("Starting the scene")
-        map.attachTo(scene: self)
+        map = Map()
+        controller = GameController(map: map!)
+        map?.attachTo(scene: self)
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -24,8 +29,14 @@ class GameScene: SKScene {
     
     override func mouseUp(with event: NSEvent) {
         if event.type == .leftMouseUp {
-            map.handleClick(position: event.location(in: self))
-            
+            if let corner = map?.handleCornerClick(position: event.location(in: self)) {
+                controller?.handleCornerClick(corner: corner)
+                return
+            }
+            if let edge = map?.handleEdgeClick(position: event.location(in: self)) {
+                controller?.handleEdgeClick(edge: edge)
+                return
+            }
         }
     }
 }

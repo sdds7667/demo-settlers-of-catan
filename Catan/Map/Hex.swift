@@ -71,8 +71,10 @@ class Hex {
     
     init(resource: Resource) {
         shapeNode = SKShapeNode()
+        shapeNode?.zPosition = 3
         self.resource = resource
         self.icon = SKSpriteNode(imageNamed: resource.rawValue)
+        icon.zPosition = 5
     }
     
     
@@ -111,6 +113,8 @@ class Hex {
             shapeNode?.fillColor = ColorScheme.grassGreen
         case .desert:
             shapeNode?.fillColor = ColorScheme.desertSand
+        case .water:
+            shapeNode?.fillColor = .clear
         }
         self.radius = radius
         self.scene?.addChild(shapeNode!)
@@ -133,27 +137,31 @@ class Hex {
     }
     
     public func cornerPosition(index: CGFloat) -> CGPoint {
-        let angle = index * (2.0 * CGFloat.pi / 6.0)
-        let x = (radius+1.5) * cos(angle)
-        let y = (radius+1.5) * sin(angle)
-        
-        let viewPosition = shapeNode?.position
-        if (viewPosition == nil) {
-            return CGPoint(x:  x, y: y)
-        } else {
-            return CGPoint(x: viewPosition!.x + x, y: viewPosition!.y + y)
+        if let pos = self.shapeNode?.position {
+            return pos + Hex.cornerPosition(index: index, radius: radius)
         }
+        return Hex.cornerPosition(index: index, radius: radius)
     }
     
-    
-
     private func placeAt(axialCoordinates: CGPoint) {
+        let pos = Hex.positionFor(axialCoordinates: axialCoordinates, radius: radius)
+        shapeNode?.position = pos
+        icon.position = CGPoint(x: pos.x, y: pos.y + radius * (20.0/75.0))
+    }
+    
+    public static func positionFor(axialCoordinates: CGPoint, radius: CGFloat) -> CGPoint {
         let cq = axialCoordinates.x
         let cr = axialCoordinates.y
         let x = (radius + 1.5) * CGFloat(3.0)/2 * cq
         let y = (radius + 1.5) * (sqrt3/2 * cq  + sqrt3 * cr)
-        shapeNode?.position = CGPoint(x:x, y:y-radius * (20.0/75.0))
-        icon.position = CGPoint(x: x, y: y)
+        return CGPoint(x: x, y: y)
+    }
+    
+    public static func cornerPosition(index: CGFloat, radius: CGFloat) -> CGPoint {
+        let angle = index * (2.0 * CGFloat.pi / 6.0)
+        let x = (radius+1.5) * cos(angle)
+        let y = (radius+1.5) * sin(angle)
+        return CGPoint(x: x, y: y)
     }
 
     

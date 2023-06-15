@@ -8,83 +8,46 @@
 import Foundation
 import SpriteKit
 
-class HexCorner {
+class HexCorner: GuidableNode {
     private var size: CGFloat = 50.0
-    var neighbourRoads: [CGFloat: HexEdge] = [CGFloat: HexEdge]()
-    private var circleRadius: CGFloat = 15.0
-    private var circle: SKShapeNode
+    var neighbourRoads: [HexEdge] = [HexEdge]()
+    private var _neighbors: [HexCorner]? = nil
+    private var neighbors: [HexCorner] {
+        get {
+            if self._neighbors == nil {
+                self._neighbors = []
+                for road in neighbourRoads {
+                    if self == road.neighbourCorner[0] {
+                        self._neighbors!.append(road.neighbourCorner[1])
+                    } else {
+                        self._neighbors!.append(road.neighbourCorner[0])
+                    }
+                }
+                return self._neighbors!
+            }
+            return self._neighbors!
+        }
+    }
+    
+    private var circleRadius: CGFloat = 11.0
     
     
-    private var _building: Building? = nil
     public var building: Building? {
-        set {
-            if newValue == nil {
+        didSet {
+            if building == nil {
                 return
             }
-            _building = newValue
-            if scene == nil {
-                return
-            }
-            _building?.attachTo(scene: scene!)
-            _building?.placeAt(point: position + CGPoint(x: 0.0, y: +3.0))
+            registerListener(building!, delta: CGPoint(x: 0, y: +3.0))
         }
-        
-        get {
-            return _building
-        }
-        
-    }
-    
-    
-    private var _scene: SKScene? = nil
-    public var scene: SKScene? {
-        set {
-            if (newValue == nil) {
-                return
-            }
-            if _scene == nil {
-                circle.zPosition = 500
-                newValue!.addChild(circle)
-            }
-            _scene = newValue
-            building?.attachTo(scene: newValue!)
-        }
-        
-        get {
-            return _scene
-        }
-    }
-    
-    private var _position: CGPoint = CGPoint(x: 0.0, y: 0.0)
-    public var position: CGPoint {
-        set {
-            _position = newValue
-            building?.placeAt(point: newValue + CGPoint(x: 0.0, y: +5.0))
-            circle.position = newValue
-        }
-        
-        get {
-            return _position
-        }
-        
     }
     
     init() {
-//        self.circle.strokeColor = .clear
-        circle = SKShapeNode(circleOfRadius: circleRadius)
-        circle.strokeColor = .clear
+        super.init(guideRadius: 11.0)
     }
+  
     
-    func containsPoint(point: CGPoint) -> Bool {
-        return self.circle.position.distanceTo(other: point) < self.circleRadius
-    }
-    
-    func select() {
-        self.circle.fillColor = SKColor.black
-    }
-    
-    func unselect() {
-        self.circle.fillColor = .clear
+    public func isValidBuildingPosition() -> Bool {
+        return self.building == nil && self.neighbors.allSatisfy{$0.building == nil}
     }
     
 }

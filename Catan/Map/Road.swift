@@ -8,7 +8,7 @@
 import Foundation
 import SpriteKit
 
-class Road {
+class Road: SceneNode {
     
     var shapeNode: SKShapeNode
     
@@ -19,7 +19,7 @@ class Road {
         
         let width = CGFloat(size * 38.0/75.0)
         let height = CGFloat(size * 8.0/75.0)
-        let delta = CGFloat(size * 4.5/75.0)
+        let delta = CGFloat(size * 4.3/75.0)
         path.move(to: CGPoint(x: delta, y: -height))
         path.addLine(to: CGPoint(x: 2*width - delta, y: -height))
         path.addLine(to: CGPoint(x: 2*width, y: CGFloat(0.0)))
@@ -31,16 +31,17 @@ class Road {
         shapeNode.lineWidth = 1.0
         shapeNode.strokeColor = SKColor.black
         shapeNode.path = path
+        shapeNode.zPosition = 5.0
+        super.init()
+        registerListener(shapeNode)
     }
     
-    func attachTo(scene: SKScene) {
-        scene.addChild(self.shapeNode)
+    var direction: CGFloat = CGFloat(0.0){
+        didSet {
+            self.shapeNode.zRotation = direction
+        }
     }
     
-    func placeAt(point: CGPoint, direction: CGFloat) {
-        shapeNode.position = point
-        shapeNode.zPosition = 10
-        shapeNode.zRotation = direction
-    }
+
 }
 
